@@ -18,6 +18,7 @@
 - 最大池化层
 - 全连接层
 
+![CNN architecture](./Diagram/CNN%20architecture%20diagram.jpg)
 ## **RNN**
 
 ## **MLP**
