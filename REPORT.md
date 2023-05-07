@@ -12,13 +12,13 @@
 ![CNN architecture](./Diagram_Charts/CNN%20architecture%20diagram.jpg)
 ## **RNN**
 以 Bi-directional LSTM 实现了 recursive neural network.
-
-- 双向双层 LSTM 层：接收某个 batch 的词向量组成的序列，每个 LSTM 单元在两个方向上分别产生自己的隐藏状态。最终只用了最后一层（第二层）两个方向上传播的各自的最后一个单元的隐藏状态作为下一层的输入。
-
+- Bi-directioanl LSTM layer 
+- Lineary layer 
+![RNN architecture](/Diagram_Charts/RNN%20architecture%20diagram.jpg)
 ## **MLP**
 简单的MLP实现。
 - mlp_layer : 接受embedding层的输出，拼接起来得到的张量，输出 hidden_size。之后进行bn,激活和池化
-
+![MLP architecture](/Diagram_Charts/MLP%20architecture%20diagram.jpg)
 
 # 实验结果
 ## 模型对比

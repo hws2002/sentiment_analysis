@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REPORT.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p><font size = "6em" ><bold><strong>PA2: 情感分类(二分类)</strong>   </bold></font> <small>2021080070 计14 韩佑硕 </small></p>
+<h1 id="%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D">模型介绍</h1>
+<p>所有模型中embedding layer为单词的所对应的词向量。为此需提前生层Vocabulary。<br>
+使用pytorch框架实现了。</p>
+<h2 id="cnn"><strong>CNN</strong></h2>
+<p>参考所提供的论文《Kim, Y. (2014). Convolutional Neural Networks for Sentence Classification. Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP 2014), 1746–1751》 设计了CNN模型。 主要为如下3个部分</p>
+<ul>
+<li>卷积层  ： 3种 kernel，height分别为3,5,7。 个数均为20. 输入层分别通过这3种卷积层输出 kernel_num * 3个output channel。再用ReLU激活。</li>
+<li>最大池化层  ： 对卷积后的每个output channel进行最大池化操作，1d。</li>
+<li>全连接层  ： 把刚才的输出跟2个（number of classes）神经元全连接，会后进行log softmax。</li>
+</ul>
+<p><img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/CNN architecture diagram.jpg" alt="CNN architecture"></p>
+<h2 id="rnn"><strong>RNN</strong></h2>
+<p>以 Bi-directional LSTM 实现了 recursive neural network.</p>
+<ul>
+<li>Bi-directioanl LSTM layer</li>
+<li>Lineary layer
+<img src="file:///Diagram_Charts/RNN architecture diagram.jpg" alt="RNN architecture"></li>
+</ul>
+<h2 id="mlp"><strong>MLP</strong></h2>
+<p>简单的MLP实现。</p>
+<ul>
+<li>mlp_layer : 接受embedding层的输出，拼接起来得到的张量，输出 hidden_size。之后进行bn,激活和池化
+<img src="file:///Diagram_Charts/MLP architecture diagram.jpg" alt="MLP architecture"></li>
+</ul>
+<h1 id="%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C">实验结果</h1>
+<h2 id="%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94">模型对比</h2>
+<p>借助 wandb 实现了可视化。<br>
+CNN, RNN_LSTM, MLP的训练、验证、测试集的准确率、损失、F-score为如下图所示。<br>
+<img src="file:///Diagram_Charts/Test Accuracy.png" alt="Test Accuracy">
+<img src="file:///Diagram_Charts/Test f1.png" alt="Test f1">
+<img src="file:///Diagram_Charts/Test Loss.png" alt="Test Loss"></p>
+<p><img src="file:///Diagram_Charts/Train Accuracy.png" alt="Train Accuracy">
+<img src="file:///Diagram_Charts/Train f1.png" alt="Train f1">
+<img src="file:///Diagram_Charts/Train Loss.png" alt="Train Loss"></p>
+<p><img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/Validation Accuracy.png" alt="Validation Accuracy">
+<img src="file:///Diagram_Charts/Validation f1.png" alt="Validation f1">
+<img src="file:///Diagram_Charts/Validation Loss.png" alt="Validation Loss"></p>
+<p>可得如下结果</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CNN</th>
+<th>RNN_LSTM</th>
+<th>MLP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Accuracy</td>
+<td>0.8591</td>
+<td>0.8103</td>
+<td>0.8347</td>
+</tr>
+<tr>
+<td>Test F-Score</td>
+<td>0.8571</td>
+<td>0.8099</td>
+<td>0.8291</td>
+</tr>
+<tr>
+<td>Test Loss</td>
+<td>0.3971</td>
+<td>0.8606</td>
+<td>0.5887</td>
+</tr>
+</tbody>
+</table>
+<h1 id="%E4%B8%8D%E5%90%8C%E5%8F%82%E6%95%B0%E7%9A%84%E5%AF%B9%E6%AF%94">不同参数的对比</h1>
+<p>在寻找最合适的 hyperparameter的过程当中，从 https://github.com/karpathy/char-rnn 中读到这样的原话。</p>
+<pre class="hljs"><code><div>Best models strategy
+The winning strategy to obtaining very good models (if you have the compute time) is to always err on making the network larger (as large as you're willing to wait for it to compute) and then try different dropout values (between 0,1). Whatever model has the best validation performance (the loss, written in the checkpoint filename, low is good) is the one you should use in the end.
+
+It is very common in deep learning to run many different models with many different hyperparameter settings, and in the end take whatever checkpoint gave the best validation performance.
+
+By the way, the size of your training and validation splits are also parameters. Make sure you have a decent amount of data in your validation set or otherwise the validation performance will be noisy and not very informative.
+</div></code></pre>
+<p>虽然这是关于char-rnn的描述，但也跟我们的pa有一定的关联，故此对dropout rate和batch_size，learning_rate 等参数进行了比较，
+所采用的模型是CNN，loss function 为 Cross Entropy function，优化器是Adam（default）。<br>
+对于其他hyperparameter，设置为如下 (CNN)</p>
+<pre class="hljs"><code><div>    update_w2v = <span class="hljs-literal">True</span>           <span class="hljs-comment"># whether to update w2v </span>
+    vocab_size = len(vocab)+<span class="hljs-number">1</span>   <span class="hljs-comment"># +1 for padding (recall that we added one more row for sentence vector)</span>
+    n_classes = <span class="hljs-number">2</span>               <span class="hljs-comment"># 0 -&gt; neg, 1 -&gt; pos | binary classification</span>
+    embedding_dim = <span class="hljs-number">50</span>          <span class="hljs-comment"># dimension of word embedding. same as word2vec model length 50</span>
+    dropout_rate = <span class="hljs-number">0.5</span> <span class="hljs-keyword">or</span> <span class="hljs-number">0.3</span>   <span class="hljs-comment"># dropout rate</span>
+    kernel_num = <span class="hljs-number">20</span>             <span class="hljs-comment"># number of each kind of kernel</span>
+    kernel_sizes = [<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>]      <span class="hljs-comment"># size of kernel, h (window size)</span>
+    pretrained_embed = s_vectors<span class="hljs-comment"># pretrained embedding matrix</span>
+    <span class="hljs-comment">#---------------------------- RNN&amp;MLP ------------------------------------</span>
+    hidden_size = <span class="hljs-number">100</span>           <span class="hljs-comment"># hidden size of rnn</span>
+    num_layers = <span class="hljs-number">2</span>              <span class="hljs-comment"># number of layers of rnn</span>
+</div></code></pre>
+<ol>
+<li>dropout_rate
+在所提供的论文中，dropout 设置为了0.5, 故此对 0.3、0.4、0.5 和 0.6 dropout rate 做了比较<br>
+<img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/Test Accuracy of CNN under different dropout rates.png" alt="dropout rate /CNN"> .
+最终发现CNN中，0.5是最恰当的droupout rate，由于资源的不足，对RNN和MLP也采用了相同的dropout rate。</li>
+<li>epochs
+通过多次实验发现，epoch超过15次，Test Accuracy 大概收敛到一定的值。故此，最终把epoch设置为15了。<br>
+并且最好的 Test Accuracy 在前10个epoch内获取，15次以后反而下降。<br>
+<img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/Test Accuracy for different models under epoch 20.png" alt="EPOCHS /CNN"></li>
+<li>初始learning_rate
+用CNN 对 1e-2, 1e-3, 1e-4, 1e-5, 1e-6 的学习率进行了比较之后发现1e-3为最恰当的初始learning_rate.<br>
+<img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/Test accuracy of CNN under different learning_rates.png" alt="学习率 /CNN"></li>
+<li>batch_size
+有些论文表明扩大batch size不一定提高准确率，反而降低学习率和batch size更提高准确率。<pre class="hljs"><code><div>Our results concluded that a higher batch size does not usually achieve high accuracy, and the learning rate and the optimizer
+used will have a significant impact as well. Lowering the learning rate and decreasing the batch size will allow the network to train better,
+especially in the case of fine-tuning
+</div></code></pre>
+from （https://www.sciencedirect.com/science/article/pii/S2405959519303455?via%3Dihub ）<br>
+故此，把学习率设置为更小的数,同时减小batch size后返现原来的参数设置得到更好的结果。<br>
+<img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/Test Accuracy of CNN under different learning rates and batch size.png" alt="learning_rate&amp;batch size /CNN"></li>
+</ol>
+<p>有一点遗憾的是，本人所用的device是cpu，若有时间和算力，就像上面所说的那样，想跑很多的runs，并求出最理想的 hyperparameter设置。
+并且各个hyperparameter最终理想设置受被决定循序的影响，这也由于资源的不足，没有考虑全。</p>
+<h1 id="%E6%95%88%E6%9E%9C%E5%B7%AE%E5%BC%82">效果差异</h1>
+<p>参考上面“模型对比”的结果可知，</p>
+<ul>
+<li>CNN : Test loss 收敛最快且低，Validation Accuracy保持升高的状态，最终收敛于一定的值。虽然Test Accuracy的波动程度大，Train Loss值最后收敛值最高，但最终准确率和 Test F-score最高</li>
+<li>RNN : 虽然 Train loss 值最低，但Validation Accuracy下降的时机太早，Test Accuracy也收敛最慢且低，Test Loss收敛值最大。</li>
+<li>MLP : Test Accuracy 收敛最快但不比CNN高。Test Loss 适中， validation Accuracy开始下降的时机快且收敛值最低。</li>
+</ul>
+<p>整体而言RNN和MLP都存在过拟合问题，MLP的Validation Accuracy更低，但Test Accuracy比RNN高。
+看来最合适的model是CNN。</p>
+<h1 id="%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83">问题思考</h1>
+<p><strong>1） 实验训练什么时候停止是最合适的?</strong><br>
+关于epoch的设置的话已经在上面阐述了，而至于如定规划停止策略，最关键的是过拟合问题。
+首先我们可以想到使用验证集的策略。按照如下图设置停止点，可以得到性能理想的model。<br>
+<img src="file:///Users/wooseokhan/Desktop/AI_intro/sentiment_analysis/Diagram_Charts/overfit_validation.png" alt="过拟合觉接方案 - 使用验证接">
+由于本次PA中，可以用wandb人工检查停止点，没涉及到pytorch的 early stopping callback。<br>
+关于这个问题，调查发现有如下方案。</p>
+<pre class="hljs"><code><div>“Some more complex triggers to stop training are as follows (note that they can also be applied in combination):
+
+The observed metric has not improved over a given number of epochs (known as the early stopping patience).
+The observed metric has not improved more than a given minimum change to be considered an improvement (known as the min_delta).”
+</div></code></pre>
+<p>来自 : (https://towardsdatascience.com/the-million-dollar-question-when-to-stop-training-deep-learning-models-fa9b488ac04d)</p>
+<p><strong>2） 实验参数的初始化是怎么做的？不同的方法适合哪些地方？（现有的初始化方法为零均值初始化，高斯分布初始化，正交初始化等）</strong><br>
+CNN，RNN，MLP的初始化分别为Kaiming Uniform, Kaiming Uniform, 高斯初始化。</p>
+<ul>
+<li>
+<p>Kaiming Uniform 初始化 : 适用于使用ReLU激活函数的卷积层的初始化，也是pytorch conv1d的默认初始方法。它会根据卷积核的尺寸和输入通道数，初始化权重值为在$[-\sqrt(k), \sqrt(k)]$之间均匀分布的随机数，其中k为卷积核的尺寸。</p>
+</li>
+<li>
+<p>零均值初始化 : 一种常见的参数初始化方法。每个权重都被初始化为从均值为0和标准差为1的正态分布中随机抽取的值。这种初始化方法的目的是使神经元的输出在训练开始时为零均值，以便更容易进行优化。还可以帮助避免梯度爆炸或消失的问题。</p>
+</li>
+<li>
+<p>Normal initialization : 普遍的标准初始化，一般取期望 = 0， 方差 = 1。</p>
+</li>
+<li>
+<p>Xavier Initialization : 使用 Xavier 等方法理论上可以保证每层神经元输入输出数据分布方差一致，同样可以帮助避免梯度爆炸或消失的问题，有利于深度神的神经网络的学习。</p>
+</li>
+<li>
+<p>He Initialization : 主要是想解决使用 ReLU 激活函数后，方差会发生变化的问题。只考虑输入个数时，He 初始化是一个均值为 0，方差为 2/n的高斯分布，适合于 ReLU 激活函数。其中 n 为网络层输入神经元数量个数。</p>
+</li>
+<li>
+<p>Orthogonal initialization : 让权重矩阵满足正交矩阵的性质。正交初始化对于RNN中的循环权重非常有效。通过保持循环权重的正交性质，可以减少梯度消失或梯度爆炸问题，提高网络的学习能力和稳定性<br>
+正交初始化也可以用于卷积层中的卷积核权重初始化。由于卷积操作具有局部性质，权重之间的相关性较强。通过正交初始化，可以保持输入和输出之间的相关性，有助于提高特征提取能力和网络的表达能力。</p>
+</li>
+</ul>
+<p>关于正交初始化更深入的内容 :</p>
+<ul>
+<li>https://zhuanlan.zhihu.com/p/388398532</li>
+<li>https://arxiv.org/abs/2004.05867</li>
+</ul>
+<p>关于 Xavier and He Normal Initialization 更深入的内容 :</p>
+<ul>
+<li>https://arxiv.org/pdf/2004.06632.pdf</li>
+<li>http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf</li>
+<li>https://blog.51cto.com/armcvai/6031437</li>
+</ul>
+<p><strong>3） 过拟合是深度学习常见的问题，有什么方法可以方式训练过程陷入过拟合。</strong><br>
+这个方法已经在课堂中提了4种方法，简化模型、正则化、交叉验证、增加数据量.<br>
+本人在此实验中，使用了简化模型(dropout rate)和交叉验证方法.<br>
+其中最终的dropout rata已经在上面阐述了，验证集的大小已经决定。<br>
+虽然CNN过拟合问题出现的不太严重，但RNN和MLP都存在了过拟合问题，程度不可忽视。</p>
+<p><strong>4） 试分析CNN，RNN，全连接神经网络（MLP）三者的优缺点</strong><br>
+CNN、RNN、MLP的结果分别为如上表，模型对比在效果差异中。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CNN</th>
+<th>RNN_LSTM</th>
+<th>MLP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Advantage</td>
+<td>可并行计算-&gt;计算速度快</td>
+<td>输入长度可变</td>
+<td>模型设计最简单，可并行计算</td>
+</tr>
+<tr>
+<td>Disadvantage</td>
+<td>输入长度不可变，不可顾及前后文脉络</td>
+<td>有序性-&gt;不能并行计算,容易产生梯度消失问题</td>
+<td>输入长度不可变</td>
+</tr>
+</tbody>
+</table>
+<h1 id="%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A">心得体会</h1>
+
+</body>
+</html>
