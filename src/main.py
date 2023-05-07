@@ -1,17 +1,21 @@
-#%% import packages
+# import packages
 import torch
 import torch.nn as nn
+import numpy as np
+# data load
 from torch.utils.data import TensorDataset, DataLoader
 from torch.optim.lr_scheduler import *
-from tqdm import tqdm
 from sklearn.metrics import f1_score
-import numpy as np
+# parsing arguments
 import argparse
+# visualization
+import wandb #API key : 75860646e1cd233208820ec86a176305dec96058
+from tqdm import tqdm
 
 
 # argument parser
 def parser_data(DEVICE):
-    from model import config, CNN
+    from model import config, CNN, RNN_LSTM, MLP
     parser = argparse.ArgumentParser(
         prog="Sentiment Analysis", description="2023 春 THU Introduction to Artificial Intelligence PA2 : Sentiment Analysis", add_help=True, allow_abbrev = True
     )
@@ -20,7 +24,7 @@ def parser_data(DEVICE):
         "--epoch",
         dest = "epoch",
         type = int,
-        default = 10, 
+        default =30, 
         help = "epoch"
     )
     parser.add_argument(
@@ -28,7 +32,7 @@ def parser_data(DEVICE):
         "--learning_rate",
         dest = "learning_rate",
         type = float,
-        default = 0.001, # 1e-3
+        default = 1e-3, # 1e-3
         help ="starting learning rate"
     )
     parser.add_argument(
@@ -54,7 +58,7 @@ def parser_data(DEVICE):
         dest="nn_model",
         type=str,
         default="CNN",
-        help="neural network model , default is CNN, you can choose RNN_LST, MLP",
+        help="neural network model , default is CNN, you can choose RNN_LSTM, MLP",
     )
     parser.add_argument(
         "-o",
@@ -92,16 +96,15 @@ def parser_data(DEVICE):
     optimizer = args.optimizer
     criterion = args.criterion
     scheduler = args.scheduler
-    
+
+
     # set model
     if model == "CNN":
         model = CNN(config).to(DEVICE)
-    elif model == "RNN_LST":
-        # model = RNN_LST(config).to(DEVICE)
-        print("not completed yet")
+    elif model == "RNN_LSTM":
+        model = RNN_LSTM(config).to(DEVICE)
     elif model == "MLP":
-        # model = MLP(config).to(DEVICE)
-        print(" not completed yet")
+        model = MLP(config).to(DEVICE)
     else :
         IOError("model not found")
         exit(1)
@@ -146,10 +149,10 @@ def parser_data(DEVICE):
     # set scheduler
     scheduler = StepLR(optimizer, step_size=5)
     
+    
     return epoch, learning_rate, max_length, batch_size, model,optimizer, criterion, scheduler
     
-
-#%% data-loader (build dataset)
+# data loader
 def load_data(max_length, batch_size):
     
     from utils import vocab, s_vectors,build_dataset
@@ -247,6 +250,8 @@ def valid_and_test(dataloader):
     f1 = f1_score(np.array(full_true), np.array(full_pred), average="binary")
     return val_loss, val_acc, f1
     
+# main
+
 if __name__ == "__main__":
     # define DEVICE
     DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -257,25 +262,29 @@ if __name__ == "__main__":
     # load data
     train_dataloader, val_dataloader, test_dataloader = load_data(max_length, batch_size)
     
-    # wandb.init(project=f"Valid", name=f"{model.__name__}", entity="eren-zhao")
-    # wandb.config = {"learning_rate": 0.001, "epochs": 100, "batch_size": 50}
+    wandb.init(project = "2023 Spring THU Introduction to Artifical Intelligence Sentiment Analysis (Binary Classification) PA",name=(f"{model.__name__}"), entity="hanys21",
+               tags = [f"{learning_rate},{EPOCHS},{batch_size},{max_length},{type(optimizer).__name__},{type(criterion).__name__},{type(scheduler).__name__},{DEVICE}"])
+    wandb.config = {"learning_rate": learning_rate, "epochs": EPOCHS, "batch_size": batch_size, "max_length":max_length,"optimizer":optimizer,"criterion":criterion,"scheduler":scheduler,"device":DEVICE}
     for each in tqdm(range(1, EPOCHS + 1)):
         tr_loss, tr_acc, tr_f1 = train(train_dataloader)
         val_loss, val_acc, val_f1 = valid_and_test(val_dataloader)
         test_loss, test_acc, test_f1 = valid_and_test(test_dataloader)
-        # wandb.log(
-        #     {
-        #         "train_loss": tr_loss,
-        #         "train_acc": tr_acc,
-        #          "train_f1": tr_f1,
-        #         "val_loss": val_loss,
-        #         "val_acc": val_acc,
-        #         "val_f1": val_f1,
-        #         "test_loss": test_loss,
-        #         "test_acc": test_acc,
-        #         "test_f1": test_f1,
-        #     }
-        # )
-        print(
-            f"for epoch {each}/{EPOCHS}, train_loss: {tr_loss:.4f}, train_acc: {tr_acc:.4f}, val_loss: {val_loss:.4f}, val_acc: {val_acc:.4f}, test_loss: {test_loss:.4f}, test_acc: {test_acc:.4f} (in average)"
+        # logging
+        wandb.log(
+            {
+                "Train Loss": tr_loss,
+                "Train Accuracy": tr_acc,
+                "Train f1": tr_f1,
+                "Validation Loss": val_loss,
+                "Validation Accuracy": val_acc,
+                "Validation f1": val_f1,
+                "Test Loss": test_loss,
+                "Test Accuracy": test_acc,
+                "Test f1": test_f1,
+            }
         )
+        print(
+            f"for epoch {each}/{EPOCHS},Train Accuracy: {tr_acc:.4f},Validation Accuracy: {val_acc:.4f}, Test Accuracy: {test_acc:.4f} (in average)"
+        )
+    
+    wandb.finish()
