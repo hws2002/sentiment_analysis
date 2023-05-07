@@ -14,27 +14,27 @@
 以 Bi-directional LSTM 实现了 recursive neural network.
 - Bi-directioanl LSTM layer 
 - Lineary layer 
-![RNN architecture](/Diagram_Charts/RNN%20architecture%20diagram.jpg)
+![RNN architecture](./Diagram_Charts/RNN%20architecture%20diagram.jpg)
 ## **MLP**
 简单的MLP实现。
 - mlp_layer : 接受embedding层的输出，拼接起来得到的张量，输出 hidden_size。之后进行bn,激活和池化
-![MLP architecture](/Diagram_Charts/MLP%20architecture%20diagram.jpg)
+![MLP architecture](./Diagram_Charts/MLP%20architecture%20diagram.jpg)
 
 # 实验结果
 ## 模型对比
 借助 wandb 实现了可视化。  
 CNN, RNN_LSTM, MLP的训练、验证、测试集的准确率、损失、F-score为如下图所示。  
-![Test Accuracy](/Diagram_Charts/Test%20Accuracy.png)
-![Test f1](/Diagram_Charts/Test%20f1.png)
-![Test Loss](/Diagram_Charts/Test%20Loss.png)
+![Test Accuracy](./Diagram_Charts/Test%20Accuracy.png)
+![Test f1](./Diagram_Charts/Test%20f1.png)
+![Test Loss](./Diagram_Charts/Test%20Loss.png)
 
-![Train Accuracy](/Diagram_Charts/Train%20Accuracy.png)
-![Train f1](/Diagram_Charts/Train%20f1.png)
-![Train Loss](/Diagram_Charts/Train%20Loss.png)
+![Train Accuracy](./Diagram_Charts/Train%20Accuracy.png)
+![Train f1](./Diagram_Charts/Train%20f1.png)
+![Train Loss](./Diagram_Charts/Train%20Loss.png)
 
-![Validation Accuracy](Diagram_Charts/Validation%20Accuracy.png)
-![Validation f1](/Diagram_Charts/Validation%20f1.png)
-![Validation Loss](/Diagram_Charts/Validation%20Loss.png)
+![Validation Accuracy](./Diagram_Charts/Validation%20Accuracy.png)
+![Validation f1](./Diagram_Charts/Validation%20f1.png)
+![Validation Loss](./Diagram_Charts/Validation%20Loss.png)
 
 可得如下结果  
 |  | CNN | RNN_LSTM | MLP|
@@ -159,3 +159,4 @@ CNN、RNN、MLP的结果分别为如上表，模型对比在效果差异中。
 | Disadvantage  | 输入长度不可变，不可顾及前后文脉络  | 有序性->不能并行计算,容易产生梯度消失问题  | 输入长度不可变 |
 
 # 心得体会
+通过本次实验能够理解并掌握设计神经网络的技术，并对深度学习有了更深的理解
